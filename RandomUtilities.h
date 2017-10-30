@@ -16,26 +16,27 @@
 #include <cmath>
 #include <ctime>
 #include <algorithm>
+//#include <random>
 
 
 // Seed the random-number generator with current time so that
 // the numbers will be different every time we run.
 // WARNING:  Only do this once per run!
-// The static variable called enforces the one call per run 
+// The static variable called enforces the one call per run
 // rule.
 void randomizeSeed()
 {
 	static bool called = false;
 	if( ! called )
 	{
-      srand( unsigned long( std::time( NULL ) ) );
+      srand( ( std::time( NULL ) ) );
 		called = true;
 	}
 }
 
 
 // Return a random variate distributed uniformly between
-// zero and one.  All doubles in this range are 
+// zero and one.  All doubles in this range are
 // approximately equally likely.
 // 0 <= r < 1
 double randUniform()
@@ -53,7 +54,7 @@ double randUniform()
 // minReal is assumed < maxReal.
 double randReal( double minReal, double maxReal )
 {
-	return minReal 
+	return minReal
 		+ ( maxReal - minReal ) * randUniform();
 }
 
@@ -63,7 +64,7 @@ double randReal( double minReal, double maxReal )
 // minInt is assumed < maxInt.
 int randInt( int minInt, int maxInt )
 {
-	return int( minInt 
+	return int( minInt
 		+ ( maxInt - minInt ) * randUniform() );
 }
 
@@ -78,7 +79,7 @@ double randExpon()
 }
 
 
-// Return a random variate from the triangle distribution 
+// Return a random variate from the triangle distribution
 // with the minimum, most likely, and maximum values given
 // by the three parameters.
 double randTriangle( double minimum, double mode, double maximum )
@@ -101,8 +102,8 @@ double randTriangle( double minimum, double mode, double maximum )
 }
 
 
-// Return a random variate from the Erlang ( sum of k 
-// exponential samples ) distribution.  The mean of the 
+// Return a random variate from the Erlang ( sum of k
+// exponential samples ) distribution.  The mean of the
 // distribution is k.
 double randErlang( short k )
 {

@@ -1,20 +1,23 @@
 // SortedDriver.cpp
 
 // tom bailey   1445  25 mar 2014
-// Construct sorted sequences and call functions that 
+// Construct sorted sequences and call functions that
 //   process the sorted sequences.
 
 
 #include "RandomUtilities.h"
 #include "ContainerPrinting.h"
-#include "winTimer.h"
+#include "winTimer.cpp"
 #include <list>
 #include <iostream>
 #include <vector>
-#include <algorithm>
-
+#include <cmath>
+//#include <algorithm>
+	// already included
 
 using namespace std;
+
+double getMostIsolatedNumber(vector<double> &v);
 
 
 // post: a sorted vector of listSize random doubles from
@@ -57,7 +60,7 @@ getWords(size_t numWords, size_t wordLength, string alphabet)
 }
 
 
-// pre:  number is not empty; 
+// pre:  number is not empty;
 //       number is sorted from smallest to largest
 // post: The most isolated entry in number has been returned
 double
@@ -110,7 +113,7 @@ main()
 		// Report a most isolated isolated number
 		Timer time;
 		time.start();
-		double isolated = mostIsolated(numbers);
+		double isolated = getMostIsolatedNumber(numbers);
 		time.stop();
 		cout << "The most isolated number is "
 			<< isolated << endl
@@ -169,4 +172,91 @@ main()
 	}
 
 	return 0;
+}
+
+
+double getMostIsolatedNumber(vector<double> &v) {
+
+	double MINumber = 0;
+	double difference = 0;
+	double differenceL = 0, differenceR = 0;
+	double previousNumber, nextNumber;
+	// vector<double>::iterator iter = v.begin();
+
+	// struct MINumber mostIsolatedNum;
+
+	// while (iter <= v.end()) {
+	for (vector<double>::iterator iter = begin(v); iter != end(v); iter++) {
+		// cout << v.begin();
+		// system(pause);
+		if (iter != begin(v)) {
+			// not the first number in the vector
+
+			previousNumber = *(iter - 1);
+
+			differenceL = abs(previousNumber - *iter);
+			// iter++;
+			// check distance to previous number
+			// if (abs(*iter - previousNumber) > difference) {
+			// 	difference = abs(*iter - previousNumber);
+			// 	MINumber = *iter;
+			// }
+		}
+		else {
+			differenceL = 0;
+		}
+
+		if (iter != end(v)) {
+			// not the last number in the vector
+
+			nextNumber = *(iter + 1);
+			differenceR = abs(nextNumber - *iter);
+			// iter--;
+
+			// check distance to next number
+			// if (abs(nextNumber - *iter) > difference) {
+			// 	difference = abs(nextNumber - *iter);
+			// 	MINumber = *iter;
+			// }
+		}
+		else {
+			differenceR = 0;
+		}
+
+		// if (iter  begin(v) && iter != end(v)) {
+		//
+		// }
+
+		if (iter == begin(v)) {
+			if (differenceR > difference) {
+				difference = differenceR;
+				MINumber = *iter;
+			}
+		}
+		else if (iter == end(v)) {
+			if (differenceL > difference) {
+				difference = differenceL;
+				MINumber = *iter;
+			}
+		}
+		else {
+			if (differenceL <= differenceR) {
+				if (differenceL > difference) {
+					difference = differenceL;
+					MINumber = *iter;
+				}
+
+			} else if (differenceR < differenceL) {
+				if (differenceR > difference) {
+					difference = differenceR;
+					MINumber = *iter;
+				}
+			}
+		}
+
+		// iter++;
+	}
+
+
+	return MINumber;
 }
