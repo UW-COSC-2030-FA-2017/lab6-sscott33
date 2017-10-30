@@ -1,3 +1,7 @@
+// Samuel Scott
+// 10-29-17
+
+
 // SortedDriver.cpp
 
 // tom bailey   1445  25 mar 2014
@@ -74,12 +78,41 @@ mostIsolated(vector<double> & number)
 // pre:  A and B are sorted.
 // post: The number of strings in A that do not occur in B
 //         has been returned.
-int
-unmatched(list<string> & A, list<string> & B)
-{
-	// STUB  STUB  STUB
-	return -1;
+
+
+
+
+
+int unmatched(list<string> & A, list<string> & B) {
+
+	////////////////////////////////////////////////
+	// not sure how to do this in O(n) operations //
+	////////////////////////////////////////////////
+
+	int numDifferent = 0;
+	for (list<string>::iterator iterA = begin(A); iterA != end(A); iterA++) {
+
+		numDifferent++;
+		for (list<string>::iterator iterB = begin(B); iterB != end(B); iterB++) {
+			if (*iterA == *iterB) {
+				numDifferent--;
+				break;
+			}
+		}
+
+	}
+
+	return numDifferent;
 }
+
+
+
+// int
+// unmatched(list<string> & A, list<string> & B)
+// {
+// 	// STUB  STUB  STUB
+// 	return -1;
+// }
 
 
 int
